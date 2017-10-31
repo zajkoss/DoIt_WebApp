@@ -10,7 +10,7 @@ public class Task {
 
     @Id
     @GeneratedValue
-    private String id;
+    private long id;
 
     private String task_description;
 
@@ -22,13 +22,14 @@ public class Task {
 
 
     @ManyToOne
-    Project project = new Project();
+    @JoinColumn(name = "id_project")
+    Project project ;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

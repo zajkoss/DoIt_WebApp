@@ -12,15 +12,15 @@ public class Project {
 
     @Id
     @GeneratedValue
-    private String id_project;
+    private long id_project;
 
     private String project_color;
 
-    public String getId_project() {
+    public long getId_project() {
         return id_project;
     }
 
-    public void setId_project(String id_project) {
+    public void setId_project(long id_project) {
         this.id_project = id_project;
     }
 
