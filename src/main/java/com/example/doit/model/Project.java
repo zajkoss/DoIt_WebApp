@@ -16,6 +16,17 @@ public class Project {
 
     private String project_color;
 
+    private String project_name;
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id_project=" + id_project +
+                ", project_color='" + project_color + '\'' +
+                ", project_name='" + project_name + '\'' +
+                '}';
+    }
+
     public long getId_project() {
         return id_project;
     }
@@ -40,7 +51,6 @@ public class Project {
         this.project_name = project_name;
     }
 
-    private String project_name;
 
 
 
