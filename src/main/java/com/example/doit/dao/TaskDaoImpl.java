@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 
-
+@Repository
 public class TaskDaoImpl implements TaskDao {
 
 
@@ -19,26 +19,32 @@ public class TaskDaoImpl implements TaskDao {
 
     @Override
     public void addTask(Task task) {
-
+            entityManager.persist(task);
     }
 
     @Override
     public void updateTask(Task task) {
-
+            entityManager.merge(task);
     }
 
     @Override
     public void delete(long id) {
+       Task task = entityManager.find(Task.class,id);
+       if(task != null)
+           entityManager.remove(task);
+
 
     }
 
     @Override
-    public void getTaskById(long id) {
+    public Task getTaskById(long id) {
+        return entityManager.find(Task.class,id);
 
     }
 
     @Override
     public List<Task> listTask() {
-        return null;
+        List<Task> taskList = entityManager.createQuery("from Task").getResultList();
+        return taskList;
     }
 }
