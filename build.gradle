@@ -20,17 +20,18 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+
 }
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+//	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	runtime('mysql:mysql-connector-java')
-
 	compile ('org.hibernate:hibernate-core:5.2.12.Final')
 	compile ('commons-dbcp:commons-dbcp:1.4')
-
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat:1.5.1.RELEASE'
+    compile ('org.hibernate:hibernate-entitymanager:5.2.12.Final')
+    compile ('org.springframework:spring-orm:5.0.1.RELEASE')
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat:1.5.8.RELEASE'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
