@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProjectDao {
 
     public void addProject(Project project);
-    public void deleteProject(Project project);
+    public void deleteProject(long project);
     public Project getProjectbyId(long id);
     public List<Project> getListProject();
 }
