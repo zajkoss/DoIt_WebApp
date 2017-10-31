@@ -2,6 +2,7 @@ package com.example.doit.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -11,25 +12,33 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:application:properties")
+@EnableTransactionManagement
+@PropertySource({ "classpath:application.properties" })
 public class HibernateConfiguration {
 
     @Autowired
     private Environment environment;
 
+//
+//    @Autowired
+//    private  LocalContainerEntityManagerFactoryBean entityManagerFactoryBean;
+
+
+    @Qualifier("dataSource")
     @Autowired
-    private  LocalContainerEntityManagerFactoryBean entityManagerFactoryBean;
+    private DataSource dataSource;
 
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(){
+   @Bean
+   public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(){
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(dataSource());
+        entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setPackagesToScan(new String[] {"com.example.doit"});
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -45,8 +54,8 @@ public class HibernateConfiguration {
         return entityManagerFactoryBean;
     }
 
-
-    private DataSource dataSource() {
+    @Bean
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
         dataSource.setUrl(environment.getProperty("jdbc.url"));
