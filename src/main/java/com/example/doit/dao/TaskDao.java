@@ -3,10 +3,11 @@ package com.example.doit.dao;
 import com.example.doit.model.Task;
 
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 
-
+@Transactional
 public interface TaskDao {
 
     public void addTask(Task task);
