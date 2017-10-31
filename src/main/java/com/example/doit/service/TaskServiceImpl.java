@@ -1,7 +1,9 @@
 package com.example.doit.service;
 
+import com.example.doit.dao.ProjectDao;
 import com.example.doit.dao.TaskDao;
 import com.example.doit.dao.TaskDaoImpl;
+import com.example.doit.model.Project;
 import com.example.doit.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskDao taskDao;
+
+    @Autowired
+    private ProjectDao projectDao;
 
 
 
@@ -47,5 +52,26 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> listTask() {
         return this.taskDao.listTask();
+    }
+
+    @Override
+    public void addProject(Project project) {
+        this.projectDao.addProject(project);
+    }
+
+    @Override
+    public void deleteProject(long project) {
+      this.projectDao.deleteProject(project);
+
+    }
+
+    @Override
+    public Project getProjectbyId(long id) {
+        return  projectDao.getProjectbyId(id);
+    }
+
+    @Override
+    public List<Project> getListProject() {
+        return this.projectDao.getListProject();
     }
 }
