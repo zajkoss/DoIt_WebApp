@@ -64,4 +64,15 @@ public class Task {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", task_description='" + task_description + '\'' +
+                ", priority=" + priority +
+                ", date=" + date +
+                ", project=" + project +
+                '}';
+    }
 }
