@@ -19,43 +19,44 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource({ "classpath:application.properties" })
+@PropertySource( "classpath:application.properties" )
 public class HibernateConfiguration {
 
     @Autowired
     private Environment environment;
 
-//
-//    @Autowired
-//    private  LocalContainerEntityManagerFactoryBean entityManagerFactoryBean;
 
 
-    @Qualifier("dataSource")
     @Autowired
-    private DataSource dataSource;
+    @Qualifier("entityManager")
+    private  LocalContainerEntityManagerFactoryBean entityManager;
+
+
+
+
 
 
    @Bean
-   public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(){
-        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(dataSource);
-        entityManagerFactoryBean.setPackagesToScan(new String[] {"com.example.doit"});
+   public LocalContainerEntityManagerFactoryBean entityManager(){
+        LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
+        entityManager.setDataSource(dataSourceMy());
+        entityManager.setPackagesToScan(new String[] {"com.example"});
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
+        entityManager.setJpaVendorAdapter(vendorAdapter);
 
         Properties properties = new Properties();
         properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
         properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
         properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
-        entityManagerFactoryBean.setJpaProperties(properties);
+        entityManager.setJpaProperties(properties);
 
 
-        return entityManagerFactoryBean;
+        return entityManager;
     }
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSourceMy() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
         dataSource.setUrl(environment.getProperty("jdbc.url"));
@@ -67,7 +68,7 @@ public class HibernateConfiguration {
     @Bean
     public JpaTransactionManager transactionManager(){
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+        transactionManager.setEntityManagerFactory(entityManager().getObject());
         return  transactionManager;
     }
 
