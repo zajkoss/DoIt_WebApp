@@ -14,19 +14,8 @@ import java.util.List;
 @Service
 public class TaskServiceImpl implements TaskService {
 
-
     @Autowired
     private TaskDao taskDao;
-
-    @Autowired
-    private ProjectDao projectDao;
-
-
-
-    public void setTaskDao(TaskDao taskDao) {
-        this.taskDao = taskDao;
-    }
-
 
     @Override
     public void addTask(Task task) {
@@ -54,24 +43,5 @@ public class TaskServiceImpl implements TaskService {
         return this.taskDao.listTask();
     }
 
-    @Override
-    public void addProject(Project project) {
-        this.projectDao.addProject(project);
-    }
 
-    @Override
-    public void deleteProject(long project) {
-      this.projectDao.deleteProject(project);
-
-    }
-
-    @Override
-    public Project getProjectbyId(long id) {
-        return  projectDao.getProjectbyId(id);
-    }
-
-    @Override
-    public List<Project> getListProject() {
-        return this.projectDao.getListProject();
-    }
 }
